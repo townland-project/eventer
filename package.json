@@ -1,0 +1,34 @@
+{
+    "name": "@townland-project/eventer",
+    "version": "0.0.1",
+    "description": "Event emitter",
+    "main": "dist/index.js",
+    "scripts": {
+        "build": "tsc --build",
+        "test": "mocha -r ts-node/register src/**/*.test.ts"
+    },
+    "keywords": [
+        "townland",
+        "eventer",
+        "event emitter"
+    ],
+    "author": {
+        "name": "Townland",
+        "url": "https://townland.xyz",
+        "email": "mail@townland.xyz"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/townland-project/eventer.git"
+    },
+    "homepage": "https://project.townland.xyz/repo/eventer",
+    "license": "MIT",
+    "devDependencies": {
+        "@types/chai": "^4.3.0",
+        "@types/mocha": "^9.0.0",
+        "chai": "^4.3.4",
+        "mocha": "^9.1.3",
+        "ts-node": "^10.4.0",
+        "typescript": "^4.5.2"
+    }
+}
