@@ -1,4 +1,4 @@
-export class Eventer {
+export class Eventer<T> {
     private callback: Callback = {}
     private stack: Stack = {}
 
@@ -8,7 +8,7 @@ export class Eventer {
      * @param name event name
      * @returns boolean event exist or not
      */
-    public has(name: string): boolean {
+    public has(name: T): boolean {
         return name in this.callback
     }
 
@@ -17,7 +17,7 @@ export class Eventer {
      * @param name event name
      * @returns boolean event is stacked or not
      */
-    public isStacked(name: string): boolean {
+    public isStacked(name: T): boolean {
         return name in this.stack
     }
 
@@ -27,8 +27,8 @@ export class Eventer {
      * @param callback event callback
      * @returns id of callback
      */
-    public on(name: string, callback: CallbackFunction): EventCallbackResult {
-        return this._add(name, callback, false)
+    public on(name: T, callback: CallbackFunction): EventCallbackResult {
+        return this._add(name as any, callback, false)
     }
 
     /**
@@ -37,16 +37,16 @@ export class Eventer {
      * @param callback event callback
      * @returns id of callback
      */
-    public once(name: string, callback: CallbackFunction): EventCallbackResult {
-        return this._add(name, callback, true)
+    public once(name: T, callback: CallbackFunction): EventCallbackResult {
+        return this._add(name as any, callback, true)
     }
 
     /**
      * Remove an event
      * @param name event name
      */
-    public remove(name: string): void {
-        delete this.callback[name]
+    public remove(name: T): void {
+        delete this.callback[name as any]
     }
 
     /**
@@ -54,14 +54,14 @@ export class Eventer {
      * @param name event name
      * @param params some optinal params
      */
-    public emit(name: string, ...params: any[]): void {
+    public emit(name: T, ...params: any[]): void {
         if (name in this.callback) {
-            this.callback[name].forEach((item: CallbackItem, index: number) => {
+            this.callback[name as any].forEach((item: CallbackItem, index: number) => {
                 item.function(...params)
-                if (item.once) this._remove(name, index)
+                if (item.once) this._remove(name as any, index)
             })
         } else {
-            this.stack[name] = params
+            this.stack[name as any] = params
         }
     }
 
@@ -77,7 +77,7 @@ export class Eventer {
         let stack = this._getStackDataParams(name)
 
         if (stack != undefined)
-            this.emit(name, ...stack)
+            this.emit(name as any, ...stack)
 
         return {
             remove: () => this._remove(name, this.callback[name].length - 1)
