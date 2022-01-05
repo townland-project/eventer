@@ -1,7 +1,7 @@
 export class Eventer<T> {
     private callback: Callback = {}
     private stack: Stack = {}
-
+    private listener!: ListenerFunction
 
     /**
      * Check event exist or not
@@ -61,10 +61,15 @@ export class Eventer<T> {
             this.callback[name as any].forEach((item: CallbackItem, index: number) => {
                 item.function(...params)
                 if (item.once) this._remove(name as any, index)
+                if (this.listener) this.listener({ name: name as any, params: params })
             })
         } else {
             this.stack[name as any] = params
         }
+    }
+
+    public Listen(callback: ListenerFunction): void {
+        this.listener = callback
     }
 
     private _add(name: string, callback: CallbackFunction, once: boolean): EventCallbackResult {
@@ -108,6 +113,11 @@ export class Eventer<T> {
     }
 }
 
+interface Event {
+    name: string
+    params: any[]
+}
+
 interface Stack {
     // event name and events params value
     [name: string]: any[]
@@ -124,6 +134,10 @@ interface CallbackItem {
 
 interface CallbackFunction {
     (...params: any[]): void
+}
+
+interface ListenerFunction {
+    (event: Event): void
 }
 
 interface EventCallbackResult {
