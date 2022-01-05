@@ -1,5 +1,5 @@
 //
-import { Eventer } from '.';
+import { EventCallbackResult, Eventer } from '.';
 //
 import { assert } from 'chai'
 
@@ -9,15 +9,15 @@ describe('eventer test', () => {
     describe('remove event listener', () => {
         let eventer = new Eventer()
 
-        let event = eventer.on(EVENT, () => { })
+        let event = eventer.on(EVENT, () => { }) as EventCallbackResult
 
         it('event exist', () => {
             assert.equal(eventer.has(EVENT), true)
         })
-        
+
         it('event not exist', () => {
             event.remove()
-            
+
             assert.equal(eventer.has(EVENT), false)
         })
     })

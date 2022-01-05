@@ -140,6 +140,6 @@ interface ListenerFunction {
     (event: Event): void
 }
 
-interface EventCallbackResult {
+export interface EventCallbackResult {
     remove: () => void
 }
