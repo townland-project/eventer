@@ -27,8 +27,9 @@ export class Eventer<T> {
      * @param callback event callback
      * @returns id of callback
      */
-    public on(name: T, callback: CallbackFunction): EventCallbackResult {
-        return this._add(name as any, callback, false)
+    public on(name: T | T[], callback: CallbackFunction): EventCallbackResult | EventCallbackResult[] {
+        if (Array.isArray(name)) return name.map((value) => this._add(value as any, callback, false))
+        else return this._add(name as any, callback, false)
     }
 
     /**
@@ -37,8 +38,9 @@ export class Eventer<T> {
      * @param callback event callback
      * @returns id of callback
      */
-    public once(name: T, callback: CallbackFunction): EventCallbackResult {
-        return this._add(name as any, callback, true)
+    public once(name: T | T[], callback: CallbackFunction): EventCallbackResult | EventCallbackResult[] {
+        if (Array.isArray(name)) return name.map((value) => this._add(value as any, callback, true))
+        else return this._add(name as any, callback, false)
     }
 
     /**
