@@ -1,6 +1,6 @@
 {
     "name": "@townland-project/eventer",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "Event emitter",
     "main": "dist/index.js",
     "scripts": {
